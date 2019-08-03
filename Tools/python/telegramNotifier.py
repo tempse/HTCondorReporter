@@ -2,7 +2,7 @@ import json
 import requests
 import urllib
 
-from TelegramNotifier.Tools.telegramNotifier import telegramBotToken, telegramUserID
+from HTCondorReporter.Tools.telegramUser import telegramBotToken, telegramUserID
 
 URL = "https://api.telegram.org/bot{}/".format(telegramBotToken)
 
