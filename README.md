@@ -5,6 +5,13 @@ A simple monitoring tool for jobs that were submitted to CERN's HTCondor infrast
 
 # Quick setup guide
 
+## Install dependencies
+
+This tool requires the *requests* library. Install it by running
+```
+pip install --user requests
+```
+
 
 ## Create and configure a Telegram bot
 
