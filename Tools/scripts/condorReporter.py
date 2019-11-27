@@ -36,7 +36,8 @@ while True:
     # send a status report once every hour
     if cnt % 12 == 0:
         send(
-            "HTCondorReporter: Monitoring {} jobs. Completed: {}, removed: {}, idle: {}, running: {}, held: {}, suspended: {}".format(
+            "HTCondorReporter (sched: {}): Monitoring {} jobs. Completed: {}, removed: {}, idle: {}, running: {}, held: {}, suspended: {}".format(
+                schedd,
                 report_dict["total_jobs"],
                 report_dict["completed_jobs"],
                 report_dict["removed_jobs"],
