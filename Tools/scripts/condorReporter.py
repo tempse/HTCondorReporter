@@ -28,7 +28,6 @@ while True:
     report = subprocess.check_output(["condor_q"])
     report_dict = read_condor_q(report)
 
-    cnt += 1
     # send a status report once every hour
     if cnt % 12 == 0:
         tasks = {
@@ -48,7 +47,7 @@ while True:
                 tasks[task]["IDLE"],
             )
             for s in tasks[task]:
-                if s not in ("HELD", "SUSPENDED"):
+                if s not in ("HOLD", "SUSPENDED"):
                     continue
                 message += ", {}: {}".format(s, tasks[task][s])
 
@@ -71,6 +70,8 @@ while True:
             )
         )
         break
+
+    cnt += 1
 
     # end reporting after 1 week
     if cnt % 2016 == 0:
