@@ -4,8 +4,8 @@ import os, sys, time
 import random
 import subprocess
 
-from HTCondorReporter.Tools.telegramNotifier import send
-from HTCondorReporter.Tools.HTCondorTools import read_condor_q
+from Tools.python.telegramNotifier import send
+from Tools.python.HTCondorTools import read_condor_q
 
 # Defaults
 user = os.getenv("USER")
@@ -29,7 +29,7 @@ while True:
     report_dict = read_condor_q(report)
 
     # send a status report once every hour
-    if cnt % 12 == 0:
+    if cnt % 6 == 0:
         tasks = {
             job_id: report_dict[job_id]
             for job_id in report_dict
