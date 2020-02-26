@@ -24,6 +24,15 @@ def read_condor_q(report):
         elif switch_mode_detailed_task:
             if line != "\n" and line != "":
                 line_elements = line.split()
+                if line_elements[1] != "ID:":
+                    new_line_elements = [line_elements[0], "ID:"]
+                    new_line_elements.extend(line_elements[1:8])
+                    if len(line_elements) > 9:
+                        new_line_elements.append(line_elements[8] + line_elements[9] + line_elements[10])
+                        new_line_elements.append(line_elements[11:])
+                    else:
+                        new_line_elements.extend(line_elements[8])
+                    line_elements = new_line_elements
                 job_id = line_elements[1] + " " + line_elements[2]
                 submit_datetime = line_elements[3] + " " + line_elements[4]
                 report_dict[job_id] = {"SUBMITTED": submit_datetime}
@@ -33,7 +42,7 @@ def read_condor_q(report):
                 # an empty line denotes the end of the task report(s)
                 switch_mode_detailed_task = False
 
-        else:
+        else:  
             # extract cumulative numbers of jobs
             res = re.search(
                     r"Total for query: (\d+) jobs; (\d+) completed, (\d+) removed, (\d+) idle, (\d+) running, (\d+) held, (\d+) suspended",
@@ -49,13 +58,14 @@ def read_condor_q(report):
 
     return report_dict
 
-
 if __name__ == "__main__":
     condor_q_output = """
 -- Schedd: bigbird36.cern.ch : <123.456.789.10:1112?... @ 12/09/19 21:43:53
 OWNER    BATCH_NAME    SUBMITTED   DONE   RUN    IDLE  TOTAL JOB_IDS
 username ID: 704081  12/9  16:36    222    33     286    541 704081.0-285
 username ID: 704082  12/9  16:36    2     123     500    625 704081.0-499
+username DAGjob      2/25 15:17     57     19      2     79 4327274.0 ... 4328957.0
+
 
 Total for query: 1166 jobs; 224 completed, 0 removed, 786 idle, 156 running, 0 held, 0 suspended 
 Total for username: 1166 jobs; 0 completed, 0 removed, 786 idle, 156 running, 0 held, 0 suspended 
