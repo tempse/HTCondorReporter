@@ -25,7 +25,12 @@ total_jobs = report_dict["total_jobs"]
 
 cnt = 0
 while True:
-    report = subprocess.check_output(["condor_q"])
+    try:
+        report = subprocess.check_output(["condor_q"])
+    except:
+        # in case of errors (eg, temporary condor_schedd glitches), just skip this iteration
+        continue
+
     report_dict = read_condor_q(report)
 
     # send a status report once every hour
