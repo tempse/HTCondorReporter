@@ -27,9 +27,12 @@ def read_condor_q(report):
                 if line_elements[1] != "ID:":
                     new_line_elements = [line_elements[0], "ID:"]
                     new_line_elements.extend(line_elements[1:8])
-                    if len(line_elements) > 9:
-                        new_line_elements.append(line_elements[8] + line_elements[9] + line_elements[10])
-                        new_line_elements.append(line_elements[11:])
+                    if "..." in line_elements:
+                        if len(line_elements) < 12:
+                            new_line_elements.append(line_elements[8] + line_elements[9] + line_elements[10])
+                        else:
+                            new_line_elements.append(line_elements[8])
+                            new_line_elements.append(line_elements[9] + line_elements[10] + line_elements[11])
                     else:
                         new_line_elements.extend(line_elements[8])
                     line_elements = new_line_elements

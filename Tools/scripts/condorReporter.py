@@ -38,18 +38,23 @@ while True:
         message = "\xE2\x8C\x9B HTCondorReporter: Monitoring {} jobs in {} tasks:".format(
             report_dict["total_jobs"], len(tasks)
         )
-        for task in tasks:
-            message += "\n\n\xE2\x9E\xA1 {} ({}) - DONE: {}, RUN: {}, IDLE: {}".format(
-                task,
-                tasks[task]["SUBMITTED"],
-                tasks[task]["DONE"],
-                tasks[task]["RUN"],
-                tasks[task]["IDLE"],
-            )
-            for s in tasks[task]:
-                if s not in ("HOLD", "SUSPENDED"):
-                    continue
-                message += ", {}: {}".format(s, tasks[task][s])
+
+        if len(tasks) > 20:
+            message += "\n\nToo many tasks, reporting summary only"
+        else:
+            for task in tasks:
+                message += "\n\n\xE2\x9E\xA1 {} ({}) - DONE: {}, RUN: {}, IDLE: {}, TOTAL: {}".format(
+                    task,
+                    tasks[task]["SUBMITTED"],
+                    tasks[task]["DONE"],
+                    tasks[task]["RUN"],
+                    tasks[task]["IDLE"],
+                    tasks[task]["TOTAL"]
+                )
+                for s in tasks[task]:
+                    if s not in ("HOLD", "SUSPENDED"):
+                        continue
+                    message += ", {}: {}".format(s, tasks[task][s])
 
         message += "\n\nSUMMARY: Completed: {}, removed: {}, idle: {}, running: {}, held: {}, suspended: {}. Scheduler: {}".format(
             report_dict["completed_jobs"],
