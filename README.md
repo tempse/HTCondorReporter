@@ -25,7 +25,7 @@ You will receive an API token in this process. Keep it, we will need it in a min
 
 Next, start chatting with your newly created bot by clicking the "t.me/[yourNewBot]" link which the botfather has sent in the same message that contained the API token.
 
-As a last step, a user ID has to be retrieved. This ID can be found by visiting https://api.telegram.org/bot[yourAPItoken]/getme, where you have to search for the integer number corresponding to the "id" data entry.
+As a last step, a user ID has to be retrieved. This ID can be found by visiting https://api.telegram.org/bot[yourAPItoken]/getUpdates, where you have to search for the integer number corresponding to the "id" of the chat with the user that will receive the notification messages (you need to send a message to the bot in order to find the entry).
 
 Having obtained API token and user ID for your new Telegram bot, let's proceed to the final setup step.
 
